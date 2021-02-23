@@ -6,6 +6,6 @@ from .models import Customer
 class CustomerAdmin(admin.ModelAdmin):
     '''Admin View for Customer'''
 
-    list_display = ('name',)
-    list_filter = ('name',)
-    search_fields = ('name',)
+    list_display = ('name', 'user')
+    list_filter = ('name', 'user')
+    search_fields = ('name', 'user__email')

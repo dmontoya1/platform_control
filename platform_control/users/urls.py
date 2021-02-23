@@ -1,14 +1,27 @@
-from django.urls import path
+# from django.urls import path
+# from .api.views import UserViewSet
+#
+#
+# app_name = "users"
+# urlpatterns = [
+#     path("login/", UserViewSet.login(), name="user_login"),
+# ]
 
-from platform_control.users.views import (
-    user_detail_view,
-    user_redirect_view,
-    user_update_view,
-)
+"""Users URLs."""
+
+# Django
+from django.urls import include, path
+
+# Django REST Framework
+from rest_framework.routers import DefaultRouter
+
+# Views
+from .api import views as user_views
+
+router = DefaultRouter()
+router.register(r'users', user_views.UserViewSet, basename='users')
 
 app_name = "users"
 urlpatterns = [
-    path("~redirect/", view=user_redirect_view, name="redirect"),
-    path("~update/", view=user_update_view, name="update"),
-    path("<str:username>/", view=user_detail_view, name="detail"),
+    path('', include(router.urls))
 ]

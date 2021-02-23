@@ -1,24 +1,32 @@
-from django.contrib.auth import get_user_model
-from rest_framework import status
+# Django REST Framework
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
 
-from .serializers import UserSerializer
+# Django
+from django.contrib.auth import get_user_model
 
+# Serializers
+from .serializers import UserLoginSerializer, UserSerializer
+
+# Models
 User = get_user_model()
 
 
-class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet):
+class UserViewSet(viewsets.GenericViewSet):
+
+    queryset = User.objects.filter(is_active=True)
     serializer_class = UserSerializer
-    queryset = User.objects.all()
-    lookup_field = "username"
 
-    def get_queryset(self, *args, **kwargs):
-        return self.queryset.filter(id=self.request.user.id)
-
-    @action(detail=False, methods=["GET"])
-    def me(self, request):
-        serializer = UserSerializer(request.user, context={"request": request})
-        return Response(status=status.HTTP_200_OK, data=serializer.data)
+    # Detail define si es una petición de detalle o no, en methods añadimos el método permitido, en nuestro caso solo vamos a permitir post
+    @action(detail=False, methods=['post'])
+    def login(self, request):
+        """User sign in."""
+        serializer = UserLoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user, token = serializer.save()
+        data = {
+            'user': UserSerializer(user).data,
+            'token': token
+        }
+        return Response(data, status=status.HTTP_201_CREATED)

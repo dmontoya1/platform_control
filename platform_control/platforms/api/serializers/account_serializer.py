@@ -20,3 +20,13 @@ class AccountSerializer(serializers.ModelSerializer):
         model = Account
         fields = ('id', 'user', 'platform', 'email', 'password', 'buy_date',
                   'renoval_date', 'screen_number', 'available_screen_number', )
+
+
+class AccountCreateSerializer(serializers.ModelSerializer):
+    """
+    """
+
+    class Meta:
+        model = Account
+        fields = ('id', 'user', 'platform', 'email', 'password', 'buy_date',
+                  'renoval_date', 'screen_number', 'available_screen_number', )

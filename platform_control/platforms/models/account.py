@@ -1,6 +1,9 @@
+from django.contrib.auth import get_user_model
+
 from .platform import Platform
-from platform_control.users.models import User
 from django.db import models
+
+User = get_user_model()
 
 
 class Account(models.Model):
