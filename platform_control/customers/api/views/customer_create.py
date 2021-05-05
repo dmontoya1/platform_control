@@ -15,4 +15,3 @@ class CustomerCreate(generics.CreateAPIView):
     def perform_create(self, serializer):
         user = get_api_user(self.request)
         serializer.save(user=user)
-

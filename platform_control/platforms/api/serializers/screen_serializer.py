@@ -19,3 +19,12 @@ class ScreenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Screen
         fields = ('id', 'account', 'customer', 'buy_date', 'renoval_date', 'pin', )
+
+
+class ScreenCreateSerializer(serializers.ModelSerializer):
+    """
+    """
+
+    class Meta:
+        model = Screen
+        fields = ('id', 'account', 'customer', 'buy_date', 'renoval_date', 'pin', )

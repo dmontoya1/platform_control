@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
 from platform_control.api.helpers import get_api_user
 
@@ -11,6 +12,7 @@ class CustomerListView(generics.ListAPIView):
     """
 
     serializer_class = CustomerSerializer
+    permission_classes = [IsAuthenticated, ]
 
     def get_queryset(self):
         user = get_api_user(self.request)

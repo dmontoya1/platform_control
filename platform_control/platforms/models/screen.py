@@ -11,7 +11,7 @@ class Screen(models.Model):
     customer = models.ForeignKey(Customer, verbose_name="Cliente", on_delete=models.CASCADE)
     buy_date = models.DateField("Fecha de compra", auto_now=False, auto_now_add=False)
     renoval_date = models.DateField("Fecha de renovación", auto_now=False, auto_now_add=False)
-    pin = models.CharField("PIN", max_length=4)
+    pin = models.CharField("PIN", max_length=4, null=True, blank=True)
 
     class Meta:
         """Meta definition for Screen."""
@@ -22,5 +22,3 @@ class Screen(models.Model):
     def __str__(self):
         """Unicode representation of Screen."""
         return "Pantalla de {} de la cuenta {}".format(self.customer, self.account)
-    
-    
